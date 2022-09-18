@@ -1,4 +1,3 @@
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -24,9 +23,58 @@ using namespace std;
 #define debmat(mat,row,col){}
 #endif
 
+vector<vector<ll>> g;
+
+vector<ll> vis;
+void dfs(ll node,ll comp)
+{
+  // marking the nodes with the component number only
+  // -> finding for each node in which component it lies in.
+  vis[node]=comp;
+  for(auto v : g[node])
+  {
+    if(!vis[v])
+    dfs(v,comp);
+  }
+}
+
 void solve()
 {
- 
+  ll n,m;
+  cin>>n>>m;
+  g.resize(n+1); // resize to number of nodes
+  vis.assign(n+1,0); // resize + clear
+  vector<pair<ll,ll>> edgelist;
+  for(ll i=0;i<m;i++)
+  {
+    ll a,b;
+    cin>>a>>b;
+    g[a].pb(b);
+    g[b].pb(a);
+    edgelist.pb({a,b}); // we make edge list undirected only extra info present in problem statement
+  }
+
+  ll num_comp =0;
+  for(ll i=1;i<=n;i++)
+  {
+    if(!vis[i])
+    {
+      num_comp++;
+      dfs(i,num_comp);
+    }
+  }
+  cout<<num_comp<<"\n";
+
+  // size 1 greater than components as 1 based indexing
+  // number of edges in the given component
+  vector<ll> num_of_edge(num_comp+1);
+
+    for(auto v:edgelist)
+    {
+      num_of_edge[vis[v.first]]++;
+    }
+  pr(num_of_edge);
+  
 }
 
 
@@ -40,7 +88,11 @@ int32_t main()
   #endif
 
   w(t)
-  solve();
+  {
+    solve();
+    g.clear();
+  }
+ 
   
 }
  
