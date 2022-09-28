@@ -32,6 +32,9 @@ vector<ll> any_cycle;
 
 void dfs(ll node, ll parent)
 {
+   //for undirected  graph uncomment
+  //if(i ==  par[node]) continue; //reject , don't even need to consider it as a neighbour
+
   par[node]=parent;
   color[node]=2;
   for(auto i:g[node])
@@ -76,12 +79,36 @@ void solve()
  g.resize(n+1); 
  color.assign(n+1,1);
  par.assign(n+1,0);
+  
+ //only for complex graphs
+ map<pair<ll,ll>,ll> edgecount;
 
  for(ll i=0;i<m;i++)
  {
+   
   ll x,y;
   cin>>x>>y;
+   
+  // for simple graph comment
+  /*
+  //only for complex graphs
+   
+  if(x==y)
+  {
+    //self loop
+  }
+   
+  if(x>y)
+  swap(x,y);
+  edgecount[{x,y}]++;
+  if(edgecount[{x,y}]>1) 
+  {
+    //multi edged graph
+  }
+  */
+   
   g[x].pb(y);//directed 
+  //g[y].pb(x);//undirected
  }
 
  //we don't assume that the graph have a single component, or every node is reachable from every other node
