@@ -73,7 +73,17 @@ void solve()
     {
       num_of_edge[vis[v.first]]++;
     }
-  pr(num_of_edge);
+  
+
+  //pairwise product sum
+  ll sum = 0;
+	ll ans = 0;
+	for(ll i=1;i<=num_comp;i++){
+		ans += sum*num_of_edge[i];
+		sum += num_of_edge[i];
+	}
+	
+	cout<<ans<<endl;
   
 }
 
@@ -96,4 +106,5 @@ int32_t main()
   
 }
  
+
 
